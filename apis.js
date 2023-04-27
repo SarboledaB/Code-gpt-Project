@@ -8,7 +8,7 @@ const { query } = require('express');
 
 // Get all students
 router.get('/students', (req, res) => {
-    const query = 'SELECT * FROM students';
+    const query = 'SELECT * FROM Student';
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -18,7 +18,7 @@ router.get('/students', (req, res) => {
 // Get student by ID
 router.get('/students/:id', (req, res) => {
     const { id } = req.params;
-    const query = `SELECT * FROM students WHERE studentID = ${id}`;
+    const query = `SELECT * FROM Student WHERE studentID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result[0]);
@@ -29,7 +29,7 @@ router.get('/students/:id', (req, res) => {
 router.post('/students', (req, res) => {
     const { firstName, lastName, email, password } = req.body;
     const student = new Student(null, firstName, lastName, email, password);
-    const query = `INSERT INTO students (firstName, lastName, email, password) VALUES ('${student.firstName}', '${student.lastName}', '${student.email}', '${student.password}')`;
+    const query = `INSERT INTO Student (firstName, lastName, email, password) VALUES ('${student.firstName}', '${student.lastName}', '${student.email}', '${student.password}')`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         student.studentID = result.insertId;
@@ -41,7 +41,7 @@ router.post('/students', (req, res) => {
 router.put('/students/:id', (req, res) => {
     const { id } = req.params;
     const { firstName, lastName, email, password } = req.body;
-    const query = `UPDATE students SET firstName = '${firstName}', lastName = '${lastName}', email = '${email}', password = '${password}' WHERE studentID = ${id}`;
+    const query = `UPDATE Student SET firstName = '${firstName}', lastName = '${lastName}', email = '${email}', password = '${password}' WHERE studentID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         const updatedStudent = new Student(id, firstName, lastName, email, password);
@@ -53,7 +53,7 @@ router.put('/students/:id', (req, res) => {
 // Delete student by ID
 router.delete('/students/:id', (req, res) => {
     const { id } = req.params;
-    const query = `DELETE FROM students WHERE studentID = ${id}`;
+    const query = `DELETE FROM Student WHERE studentID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(`Student with ID ${id} deleted`);
@@ -63,7 +63,7 @@ router.delete('/students/:id', (req, res) => {
 
 // Get all courses
 router.get('/courses', (req, res) => {
-    const query = 'SELECT * FROM courses';
+    const query = 'SELECT * FROM Course';
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -73,7 +73,7 @@ router.get('/courses', (req, res) => {
 // Get course by ID
 router.get('/courses/:id', (req, res) => {
     const { id } = req.params;
-    const query = `SELECT * FROM courses WHERE courseID = ${id}`;
+    const query = `SELECT * FROM Course WHERE courseID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result[0]);
@@ -82,7 +82,7 @@ router.get('/courses/:id', (req, res) => {
 // Add course
 router.post('/courses', (req, res) => {
     const { name, description, credits } = req.body;
-    const query = `INSERT INTO courses (name, description, credits) VALUES ('${name}', '${description}', ${credits})`;
+    const query = `INSERT INTO Course (name, description, credits) VALUES ('${name}', '${description}', ${credits})`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         const newCourse = { courseID: result.insertId, name, description, credits };
@@ -93,7 +93,7 @@ router.post('/courses', (req, res) => {
 router.put('/courses/:id', (req, res) => {
     const { id } = req.params;
     const { name, description, credits } = req.body;
-    const query = `UPDATE courses SET name = '${name}', description = '${description}', credits = ${credits} WHERE courseID = ${id}`;
+    const query = `UPDATE Course SET name = '${name}', description = '${description}', credits = ${credits} WHERE courseID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         const updatedCourse = { courseID: id, name, description, credits };
@@ -103,7 +103,7 @@ router.put('/courses/:id', (req, res) => {
 // Delete course by ID
 router.delete('/courses/:id', (req, res) => {
     const { id } = req.params;
-    const query = `DELETE FROM courses WHERE courseID = ${id}`;
+    const query = `DELETE FROM Course WHERE courseID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(`Course with ID ${id} deleted`);
