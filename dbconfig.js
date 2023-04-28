@@ -1,19 +1,17 @@
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'your_user_name',
-  password: 'your_password',
-  database: 'your_database_name',
-});
+const config = {
+    host: 'localhost',
+    user: 'root',
+    password: 'GPTpassword',
+    database: 'GPTdatabase'
+};
+
+const connection = mysql.createConnection(config);
 
 connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to database: ', err.stack);
-    return;
-  }
-
-  console.log(`Connected to database as id ${connection.threadId}`);
+    if (err) throw err;
+    console.log('Connected to database');
 });
 
 module.exports = connection;
