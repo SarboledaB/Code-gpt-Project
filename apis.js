@@ -60,7 +60,6 @@ router.delete('/students/:id', (req, res) => {
     });
 });
 
-
 // Get all courses
 router.get('/courses', (req, res) => {
     const query = 'SELECT * FROM Course';
@@ -79,27 +78,31 @@ router.get('/courses/:id', (req, res) => {
         res.send(result[0]);
     });
 });
-// Add course
+
+// Create course
 router.post('/courses', (req, res) => {
-    const { name, description, credits } = req.body;
-    const query = `INSERT INTO Course (name, description, credits) VALUES ('${name}', '${description}', ${credits})`;
+    const { courseName, description, instructor, startTime, endTime, location } = req.body;
+    const course = new Course(null, courseName, description, instructor, startTime, endTime, location);
+    const query = `INSERT INTO Course (courseName, description, instructor, startTime, endTime, location) VALUES ('${course.courseName}', '${course.description}', '${course.instructor}', '${course.startTime}', '${course.endTime}', '${course.location}')`;
     connection.query(query, (err, result) => {
         if (err) throw err;
-        const newCourse = { courseID: result.insertId, name, description, credits };
-        res.send(newCourse);
+        course.courseID = result.insertId;
+        res.send(course);
     });
 });
+
 // Update course by ID
 router.put('/courses/:id', (req, res) => {
     const { id } = req.params;
-    const { name, description, credits } = req.body;
-    const query = `UPDATE Course SET name = '${name}', description = '${description}', credits = ${credits} WHERE courseID = ${id}`;
+    const { courseName, description, instructor, startTime, endTime, location } = req.body;
+    const query = `UPDATE Course SET courseName = '${courseName}', description = '${description}', instructor = '${instructor}', startTime = '${startTime}', endTime = '${endTime}', location = '${location}' WHERE courseID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
-        const updatedCourse = { courseID: id, name, description, credits };
+        const updatedCourse = new Course(id, courseName, description, instructor, startTime, endTime, location);
         res.send(updatedCourse);
     });
 });
+
 // Delete course by ID
 router.delete('/courses/:id', (req, res) => {
     const { id } = req.params;
