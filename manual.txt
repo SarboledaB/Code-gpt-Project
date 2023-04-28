@@ -1,0 +1,3 @@
+Manual se mueve boton de courses.jsx adentro de create course
+actualizar puerto de 3000 a 3001 en front
+se agrega peticion hhtp a crear curso

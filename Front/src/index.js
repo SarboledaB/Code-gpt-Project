@@ -4,13 +4,14 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Courses from './Courses';
 import Login from './Login';
 import Enrollement from './Enrollement';
+import CourseForm from './CreateCourse';
 
 const App = () => (
   <Router>
     <Routes>
       <Route path="/" exact element={<Courses/>} />
-      <Route path="/login" element={<Login/>} />
-      <Route path="/enrollement" element={<Enrollement/>} />      
+      {/* <Route path="/login" element={<Login/>} />
+      <Route path="/enrollement" element={<Enrollement/>} />       */}
     </Routes>
   </Router>  
 );  

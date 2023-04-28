@@ -1,42 +1,68 @@
-
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import CourseForm from "./CreateCourse";
+import CourseList from "./CourseList";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
 
+  const getCourses = () => {
+    fetch("http://localhost:3000/courses")
+      .then((response) => response.json())
+      .then((data) => setCourses(data)) // not check yet!
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    // getCourses();
+  }, []);
+
   const addCourse = (course) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(course),
+    };
+
+    fetch("http://localhost:3000/courses", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
     setCourses([...courses, course]);
   };
 
-  const deleteCourse = (index) => {
-    let newCourses = courses.filter((_, i) => i !== index);
-    setCourses(newCourses);
+  const deleteCourse = (id) => {
+    // fetch(`http://localhost:3000/courses/${id}`, {
+    //   method: "DELETE",
+    // })
+    //   .then(() => {
+    //     getCourses();
+    //   })
+    //   .catch((err) => alert(err));
   };
 
   const updateCourse = (index, course) => {
-    let newCourses = courses.map((c, i) => {
-      if (i === index) return course;
-      return c;
-    });
-
-    setCourses(newCourses);
+    // fetch(`http://localhost:3000/courses/${id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then(() => {
+    //     getCourses();
+    //   })
+    //   .catch((err) => alert(err));
   };
 
   return (
     <div>
       <h1>CRUD for Courses</h1>
 
-      <ul>{courses.map((course, index) => (
-        <li key={index}>{course}</li>))}</ul>
-
-      <button onClick={() => addCourse('New Course')}>Add Course</button>
-
-      <button onClick={() => deleteCourse(0)}>Delete Course</button>
-
-      <button onClick={() => updateCourse(0, 'Updated Course')}>Update Course</button>  
-
-    </div>  
-  );  
-};  
+      <CourseList
+        courses={courses}
+        deleteCourse={deleteCourse}
+        updateCourse={updateCourse}
+      ></CourseList>
+      <CourseForm submit={addCourse}></CourseForm>
+    </div>
+  );
+};
 export default Courses;
