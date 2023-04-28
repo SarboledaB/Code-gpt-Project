@@ -110,5 +110,20 @@ router.delete('/courses/:id', (req, res) => {
     });
 });
 
+// Login student
+router.post('/students/login', (req, res) => {
+    const { email, password } = req.body;
+    const query = `SELECT * FROM Student WHERE email = '${email}' AND password = '${password}'`;
+    connection.query(query, (err, result) => {
+        if (err) throw err;
+        if (result.length === 0) {
+            res.status(401).send('Invalid credentials');
+        } else {
+            const student = new Student(result[0].studentID, result[0].firstName, result[0].lastName, result[0].email, result[0].password);
+            res.send(student);
+        }
+    });
+});
+
 
 module.exports = router;
