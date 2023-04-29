@@ -6,14 +6,14 @@ const CoursesHome = () => {
   const [courses, setCourses] = useState([]);
 
   const getCourses = () => {
-    fetch("http://localhost:3000/courses")
+    fetch("http://localhost:3000/api/courses")
       .then((response) => response.json())
       .then((data) => setCourses(data)) // not check yet!
       .catch((error) => console.error(error));
   };
 
   useEffect(() => {
-    // getCourses();
+    getCourses();
   }, []);
 
   const addCourse = (course) => {
@@ -23,24 +23,24 @@ const CoursesHome = () => {
       body: JSON.stringify(course),
     };
 
-    fetch("http://localhost:3000/courses", requestOptions)
+    fetch("http://localhost:3000/api/courses", requestOptions)
       .then((response) => response.json())
       .then((data) => console.log(data));
     setCourses([...courses, course]);
   };
 
   const deleteCourse = (id) => {
-    // fetch(`http://localhost:3000/courses/${id}`, {
-    //   method: "DELETE",
-    // })
-    //   .then(() => {
-    //     getCourses();
-    //   })
-    //   .catch((err) => alert(err));
+    fetch(`http://localhost:3000/api/courses/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        getCourses();
+      })
+      .catch((err) => alert(err));
   };
 
   const updateCourse = (index, course) => {
-    // fetch(`http://localhost:3000/courses/${id}`, {
+    // fetch(`http://localhost:3000/api/courses/${id}`, {
     //   method: "PUT",
     //   headers: {
     //     "Content-Type": "application/json",

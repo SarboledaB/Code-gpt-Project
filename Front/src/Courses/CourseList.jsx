@@ -20,8 +20,8 @@ const CourseList = (props) => {
         </thead>
         <tbody>
           {courses.map((course) => (
-            <tr key={course.courseId}>
-              <td>{course.courseId} </td>
+            <tr key={course.courseID}>
+              <td>{course.courseID} </td>
               <td>{course.courseName} </td>
               <td>{course.description} </td>
               <td>{course.instructor} </td>
@@ -30,7 +30,7 @@ const CourseList = (props) => {
               <td>{course.location} </td>
               <td>
                 <button
-                  onClick={() => this.props.deleteCourse(course.courseId)}
+                  onClick={() => this.props.deleteCourse(course.courseID)}
                 >
                   Delete Course
                 </button>

@@ -6,7 +6,7 @@ function EnrollementsHome() {
   const [enrollements, setEnrollements] = useState([]);
 
   const getEnrollements = () => {
-    fetch("http://localhost:3000/enrollements")
+    fetch("http://localhost:3000/api/enrollements")
       .then((response) => response.json())
       .then((data) => setEnrollements(data)) // not check yet!
       .catch((error) => console.error(error));
