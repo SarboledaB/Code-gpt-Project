@@ -29,16 +29,12 @@ const CourseList = (props) => {
               <td>{course.endTime} </td>
               <td>{course.location} </td>
               <td>
-                <button
-                  onClick={() => this.props.deleteCourse(course.courseId)}
-                >
+                <button onClick={() => props.deleteCourse(course.courseId)}>
                   Delete Course
                 </button>
               </td>
               <td>
-                <button
-                  onClick={() => this.props.updateCourse(course.courseId)}
-                >
+                <button onClick={() => props.updateCourse(course.courseId)}>
                   Update Course
                 </button>
               </td>

@@ -13,7 +13,7 @@ const CoursesHome = () => {
   };
 
   useEffect(() => {
-    // getCourses();
+    getCourses();
   }, []);
 
   const addCourse = (course) => {
@@ -30,26 +30,26 @@ const CoursesHome = () => {
   };
 
   const deleteCourse = (id) => {
-    // fetch(`http://localhost:3000/courses/${id}`, {
-    //   method: "DELETE",
-    // })
-    //   .then(() => {
-    //     getCourses();
-    //   })
-    //   .catch((err) => alert(err));
+    fetch(`http://localhost:3000/courses/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        getCourses();
+      })
+      .catch((err) => alert(err));
   };
 
   const updateCourse = (index, course) => {
-    // fetch(`http://localhost:3000/courses/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then(() => {
-    //     getCourses();
-    //   })
-    //   .catch((err) => alert(err));
+    fetch(`http://localhost:3000/courses/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(() => {
+        getCourses();
+      })
+      .catch((err) => alert(err));
   };
 
   return (

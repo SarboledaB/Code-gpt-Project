@@ -21,3 +21,7 @@
 * make a delete request on react to the enpoint http://localhost:3000/courses with a param called id
 
 * make a put request on react to the enpoint http://localhost:3000/courses with a queryparam called id
+
+- create a form in react to create students with the following attributes StudentID, FirstName, LastName, Email ,Password
+
+- create a component in react to list students with the following attributes StudentID, FirstName, LastName, Email ,Password
