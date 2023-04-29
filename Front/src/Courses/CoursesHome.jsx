@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CourseForm from "./CreateCourse";
 import CourseList from "./CourseList";
 
-const Courses = () => {
+const CoursesHome = () => {
   const [courses, setCourses] = useState([]);
 
   const getCourses = () => {
@@ -65,4 +65,4 @@ const Courses = () => {
     </div>
   );
 };
-export default Courses;
+export default CoursesHome;
