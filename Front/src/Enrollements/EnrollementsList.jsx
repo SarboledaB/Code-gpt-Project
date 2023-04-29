@@ -21,6 +21,24 @@ const EnrollementsList = (props) => {
               <td>{enrollement.StudentID}</td>
               <td>{enrollement.CourseID}</td>
               <td>{enrollement.EnrollmentDate}</td>
+              <td>
+                <button
+                  onClick={() =>
+                    props.deleteEnrollement(enrollement.EnrollmentID)
+                  }
+                >
+                  Delete Course
+                </button>
+              </td>
+              <td>
+                <button
+                  onClick={() =>
+                    props.updateEnrollement(enrollement.EnrollmentID)
+                  }
+                >
+                  Update Course
+                </button>
+              </td>
             </tr>
           </tbody>
         ))}

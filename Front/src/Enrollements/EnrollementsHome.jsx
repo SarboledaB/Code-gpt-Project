@@ -13,12 +13,43 @@ function EnrollementsHome() {
   };
 
   useEffect(() => {
-    // getEnrollements();
+    getEnrollements();
   }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // alert(`Course Name: ${courseName}, Student Name: ${studentName}`);
+  const addEnrollement = (enrollement) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(enrollement),
+    };
+
+    fetch("http://localhost:3000/api/enrollements", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+    setEnrollements([...enrollements, enrollement]);
+  };
+
+  const deleteEnrollement = (id) => {
+    fetch(`http://localhost:3000/api/enrollements/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        getEnrollements();
+      })
+      .catch((err) => alert(err));
+  };
+
+  const updateEnrollement = (index, course) => {
+    // fetch(`http://localhost:3000/api/courses/${id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then(() => {
+    //     getCourses();
+    //   })
+    //   .catch((err) => alert(err));
   };
 
   return (
@@ -26,11 +57,10 @@ function EnrollementsHome() {
       <h1>Enrollements</h1>
       <EnrollementsList
         enrollements={enrollements}
-        // deleteEnrollement={deleteCourse}
-        // updateCourse={updateCourse}
+        deleteEnrollement={deleteEnrollement}
+        updateEnrollement={updateEnrollement}
       ></EnrollementsList>
-      <CreateEnrollment></CreateEnrollment>
-      {/* <CourseForm submit={addCourse}></CourseForm> */}
+      <CreateEnrollment addEnrollement={addEnrollement}></CreateEnrollment>
     </>
   );
 }

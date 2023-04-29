@@ -1,22 +1,14 @@
 import React, { useState } from "react";
 
-function CreateEnrollment({ addCourse }) {
+function CreateEnrollment({ addEnrollement }) {
   const [studentID, setStudentID] = useState("");
   const [courseID, setCourseID] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addCourse({ studentID, courseID });
+    addEnrollement({ studentID, courseID });
     setStudentID("");
     setCourseID("");
-
-    fetch("http://localhost:3000/enrollements", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ studentID, courseID }),
-    });
   };
 
   return (
