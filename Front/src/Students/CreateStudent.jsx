@@ -25,6 +25,7 @@ const CreateStudentForm = () => {
       email: "",
       password: "",
     }); // Reset the form after submission
+    this.props.submit(this.state);
   };
 
   return (
