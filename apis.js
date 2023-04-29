@@ -8,7 +8,7 @@ const { query } = require('express');
 
 // Get all students
 router.get('/students', (req, res) => {
-    const query = 'SELECT * FROM Student';
+    const query = 'SELECT * FROM students';
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -18,7 +18,7 @@ router.get('/students', (req, res) => {
 // Get student by ID
 router.get('/students/:id', (req, res) => {
     const { id } = req.params;
-    const query = `SELECT * FROM Student WHERE studentID = ${id}`;
+    const query = `SELECT * FROM students WHERE studentID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result[0]);
@@ -29,7 +29,7 @@ router.get('/students/:id', (req, res) => {
 router.post('/students', (req, res) => {
     const { firstName, lastName, email, password } = req.body;
     const student = new Student(null, firstName, lastName, email, password);
-    const query = `INSERT INTO Student (firstName, lastName, email, password) VALUES ('${student.firstName}', '${student.lastName}', '${student.email}', '${student.password}')`;
+    const query = `INSERT INTO students (firstName, lastName, email, password) VALUES ('${student.firstName}', '${student.lastName}', '${student.email}', '${student.password}')`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         student.studentID = result.insertId;
@@ -41,7 +41,7 @@ router.post('/students', (req, res) => {
 router.put('/students/:id', (req, res) => {
     const { id } = req.params;
     const { firstName, lastName, email, password } = req.body;
-    const query = `UPDATE Student SET firstName = '${firstName}', lastName = '${lastName}', email = '${email}', password = '${password}' WHERE studentID = ${id}`;
+    const query = `UPDATE students SET firstName = '${firstName}', lastName = '${lastName}', email = '${email}', password = '${password}' WHERE studentID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         const updatedStudent = new Student(id, firstName, lastName, email, password);
@@ -53,7 +53,7 @@ router.put('/students/:id', (req, res) => {
 // Delete student by ID
 router.delete('/students/:id', (req, res) => {
     const { id } = req.params;
-    const query = `DELETE FROM Student WHERE studentID = ${id}`;
+    const query = `DELETE FROM students WHERE studentID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(`Student with ID ${id} deleted`);
@@ -62,7 +62,7 @@ router.delete('/students/:id', (req, res) => {
 
 // Get all courses
 router.get('/courses', (req, res) => {
-    const query = 'SELECT * FROM Course';
+    const query = 'SELECT * FROM courses';
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -72,7 +72,7 @@ router.get('/courses', (req, res) => {
 // Get course by ID
 router.get('/courses/:id', (req, res) => {
     const { id } = req.params;
-    const query = `SELECT * FROM Course WHERE courseID = ${id}`;
+    const query = `SELECT * FROM courses WHERE courseID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(result[0]);
@@ -83,7 +83,7 @@ router.get('/courses/:id', (req, res) => {
 router.post('/courses', (req, res) => {
     const { courseName, description, instructor, startTime, endTime, location } = req.body;
     const course = new Course(null, courseName, description, instructor, startTime, endTime, location);
-    const query = `INSERT INTO Course (courseName, description, instructor, startTime, endTime, location) VALUES ('${course.courseName}', '${course.description}', '${course.instructor}', '${course.startTime}', '${course.endTime}', '${course.location}')`;
+    const query = `INSERT INTO courses (courseName, description, instructor, startTime, endTime, location) VALUES ('${course.courseName}', '${course.description}', '${course.instructor}', '${course.startTime}', '${course.endTime}', '${course.location}')`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         course.courseID = result.insertId;
@@ -95,7 +95,7 @@ router.post('/courses', (req, res) => {
 router.put('/courses/:id', (req, res) => {
     const { id } = req.params;
     const { courseName, description, instructor, startTime, endTime, location } = req.body;
-    const query = `UPDATE Course SET courseName = '${courseName}', description = '${description}', instructor = '${instructor}', startTime = '${startTime}', endTime = '${endTime}', location = '${location}' WHERE courseID = ${id}`;
+    const query = `UPDATE courses SET courseName = '${courseName}', description = '${description}', instructor = '${instructor}', startTime = '${startTime}', endTime = '${endTime}', location = '${location}' WHERE courseID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         const updatedCourse = new Course(id, courseName, description, instructor, startTime, endTime, location);
@@ -106,7 +106,7 @@ router.put('/courses/:id', (req, res) => {
 // Delete course by ID
 router.delete('/courses/:id', (req, res) => {
     const { id } = req.params;
-    const query = `DELETE FROM Course WHERE courseID = ${id}`;
+    const query = `DELETE FROM courses WHERE courseID = ${id}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         res.send(`Course with ID ${id} deleted`);
@@ -117,7 +117,7 @@ router.delete('/courses/:id', (req, res) => {
 router.post('/enrollments', (req, res) => {
     const { studentID, courseID } = req.body;
     const enrollment = new Enrollment(null, new Student(studentID), new Course(courseID), new Date());
-    const query = `INSERT INTO Enrollment (studentID, courseID, enrollmentDate) VALUES ('${enrollment.student.studentID}', '${enrollment.course.courseID}', '${enrollment.enrollmentDate.toISOString()}')`;
+    const query = `INSERT INTO enrollments (studentID, courseID, enrollmentDate) VALUES ('${enrollment.student.studentID}', '${enrollment.course.courseID}', '${enrollment.enrollmentDate.toISOString()}')`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.affectedRows === 0) {
@@ -131,7 +131,7 @@ router.post('/enrollments', (req, res) => {
 
 // READ enrollments
 router.get('/enrollments', (req, res) => {
-    const query = `SELECT * FROM Enrollment`;
+    const query = `SELECT * FROM enrollments`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         const enrollments = result.map(row => new Enrollment(
@@ -149,7 +149,7 @@ router.put('/enrollments/:enrollmentID', (req, res) => {
     const { studentID, courseID } = req.body;
     const enrollmentID = req.params.enrollmentID;
     const enrollment = new Enrollment(enrollmentID, new Student(studentID), new Course(courseID), new Date());
-    const query = `UPDATE Enrollment SET studentID='${enrollment.student.studentID}', courseID='${enrollment.course.courseID}', enrollmentDate='${enrollment.enrollmentDate.toISOString()}' WHERE enrollmentID=${enrollmentID}`;
+    const query = `UPDATE enrollments SET studentID='${enrollment.student.studentID}', courseID='${enrollment.course.courseID}', enrollmentDate='${enrollment.enrollmentDate.toISOString()}' WHERE enrollmentID=${enrollmentID}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.affectedRows === 0) {
@@ -163,7 +163,7 @@ router.put('/enrollments/:enrollmentID', (req, res) => {
 // DELETE enrollment
 router.delete('/enrollments/:enrollmentID', (req, res) => {
     const enrollmentID = req.params.enrollmentID;
-    const query = `DELETE FROM Enrollment WHERE enrollmentID=${enrollmentID}`;
+    const query = `DELETE FROM enrollments WHERE enrollmentID=${enrollmentID}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.affectedRows === 0) {
@@ -178,7 +178,7 @@ router.delete('/enrollments/:enrollmentID', (req, res) => {
 // Login student
 router.post('/students/login', (req, res) => {
     const { email, password } = req.body;
-    const query = `SELECT * FROM Student WHERE email = '${email}' AND password = '${password}'`;
+    const query = `SELECT * FROM students WHERE email = '${email}' AND password = '${password}'`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.length === 0) {
@@ -194,7 +194,7 @@ router.post('/students/login', (req, res) => {
 router.post('/prerequisites', (req, res) => {
     const { courseID, prerequisiteCourseID } = req.body;
     const prerequisite = new Prerequisite(null, new Course(courseID), new Course(prerequisiteCourseID));
-    const query = `INSERT INTO Prerequisite (courseID, prerequisiteCourseID) VALUES ('${prerequisite.course.courseID}', '${prerequisite.prerequisiteCourse.courseID}')`;
+    const query = `INSERT INTO prerequisites (courseID, prerequisiteCourseID) VALUES ('${prerequisite.course.courseID}', '${prerequisite.prerequisiteCourse.courseID}')`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.affectedRows === 0) {
@@ -209,7 +209,7 @@ router.post('/prerequisites', (req, res) => {
 
 // READ prerequisites
 router.get('/prerequisites', (req, res) => {
-    const query = `SELECT * FROM Prerequisite`;
+    const query = `SELECT * FROM prerequisites`;
         connection.query(query, (err, result) => {
                 if (err) throw err;
                 const prerequisites = result.map(row => new Prerequisite(
@@ -227,7 +227,7 @@ router.put('/prerequisites/:prerequisiteID', (req, res) => {
     const { courseID, prerequisiteCourseID } = req.body;
     const prerequisiteID = req.params.prerequisiteID;
     const prerequisite = new Prerequisite(prerequisiteID, new Course(courseID), new Course(prerequisiteCourseID));
-    const query = `UPDATE Prerequisite SET courseID='${prerequisite.course.courseID}', prerequisiteCourseID='${prerequisite.prerequisiteCourse.courseID}' WHERE prerequisiteID=${prerequisiteID}`;
+    const query = `UPDATE prerequisites SET courseID='${prerequisite.course.courseID}', prerequisiteCourseID='${prerequisite.prerequisiteCourse.courseID}' WHERE prerequisiteID=${prerequisiteID}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.affectedRows === 0) {
@@ -242,7 +242,7 @@ router.put('/prerequisites/:prerequisiteID', (req, res) => {
 // DELETE prerequisite
 router.delete('/prerequisites/:prerequisiteID', (req, res) => {
     const prerequisiteID = req.params.prerequisiteID;
-    const query = `DELETE FROM Prerequisite WHERE prerequisiteID=${prerequisiteID}`;
+    const query = `DELETE FROM prerequisites WHERE prerequisiteID=${prerequisiteID}`;
     connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.affectedRows === 0) {
