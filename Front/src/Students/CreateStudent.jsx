@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CreateStudentForm = () => {
+const CreateStudentForm = ({ submit }) => {
   const [student, setStudent] = useState({
     studentID: "",
     firstName: "",
@@ -25,7 +25,7 @@ const CreateStudentForm = () => {
       email: "",
       password: "",
     }); // Reset the form after submission
-    this.props.submit(this.state);
+    submit(this.state);
   };
 
   return (
