@@ -53,16 +53,15 @@ const CoursesHome = () => {
   };
 
   return (
-    <div>
-      <h1>CRUD for Courses</h1>
-
+    <>
+      <h1>Courses</h1>
       <CourseList
         courses={courses}
         deleteCourse={deleteCourse}
         updateCourse={updateCourse}
       ></CourseList>
       <CourseForm submit={addCourse}></CourseForm>
-    </div>
+    </>
   );
 };
 export default CoursesHome;

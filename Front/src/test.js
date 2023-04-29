@@ -1,0 +1,1 @@
+// make a get request on react to the enpoint http://localhost:3000/enrollements
